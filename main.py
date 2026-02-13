@@ -3,7 +3,13 @@
 from agents.robot_agent import RobotAgent
 from environment.grid_environment import GridEnvironment
 from planners.astar import AStarPlanner
+from planners.dijkstra import DijkstraPlanner
+from planners.greedy import GreedyBestFirstPlanner
 from visualization.plotter import visualize_path
+from visualization.pro_plotter import visualize_path_pro
+
+PLANNER_TYPE = "astar"  # options: astar, dijkstra, greedy
+VIZ_MODE = "pro"  # options: basic, pro
 
 MAP = [
     [0, 0, 0, 0, 0, 1, 0],
@@ -20,13 +26,31 @@ START = (0, 0)
 GOAL = (7, 6)
 
 
+def _create_planner():
+    if PLANNER_TYPE == "astar":
+        return AStarPlanner()
+    elif PLANNER_TYPE == "dijkstra":
+        return DijkstraPlanner()
+    elif PLANNER_TYPE == "greedy":
+        return GreedyBestFirstPlanner()
+    else:
+        raise ValueError(f"Unknown planner type: {PLANNER_TYPE}")
+
+
 def run():
     environment = GridEnvironment(MAP)
-    planner = AStarPlanner()
+    planner = _create_planner()
     agent = RobotAgent(planner)
 
     path, metrics = agent.navigate(START, GOAL, environment)
-    visualize_path(environment, path)
+
+    # Add planner name to metrics for visualization
+    metrics.planner_name = planner.name
+
+    if VIZ_MODE == "pro":
+        visualize_path_pro(environment, path, metrics)
+    else:
+        visualize_path(environment, path)
 
     print(path)
     print(
