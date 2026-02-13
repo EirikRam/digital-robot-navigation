@@ -1,2 +1,4 @@
 __pycache__/
 .venv/
+outputs/
+generate_arch_diagram.py
