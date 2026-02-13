@@ -53,3 +53,13 @@ main.py
 - 4-directional movement only (Up, Down, Left, Right)
 - Manhattan distance heuristic for A*
 - Path returned as list of direction strings
+
+### 3D Visualization (VIZ_MODE="3d_live")
+
+- Uses PyVista for real-time 3D rendering
+- Loads GLB robot model from `assets/models/` (robot_basic_pbr.glb preferred, robot_shaded.glb fallback)
+- Configuration constants in `visualization/viz3d_live.py`:
+  - `MODEL_ROT_X/Y/Z`: Axis correction (default X=90 for Y-up to Z-up conversion)
+  - `ROBOT_SCALE`: Max dimension ~0.85 to fit grid cell
+  - `ROBOT_COLOR`, `ROBOT_METALLIC`, `ROBOT_ROUGHNESS`: Material settings
+- Press 'f' to toggle follow-camera mode
