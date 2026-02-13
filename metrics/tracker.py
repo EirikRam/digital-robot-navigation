@@ -1,6 +1,6 @@
 """Metrics tracking for planner runs."""
 
-from dataclasses import dataclass
+from dataclasses import asdict, dataclass
 
 
 @dataclass
@@ -9,3 +9,6 @@ class PlannerMetrics:
     nodes_expanded: int = 0
     runtime: float = 0.0
     heuristic_cost: int = 0
+
+    def to_dict(self) -> dict:
+        return asdict(self)
